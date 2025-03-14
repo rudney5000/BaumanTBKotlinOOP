@@ -60,4 +60,24 @@ class LibraryRepositoryImpl(private val dataSource: LocalDataSource) : ILibraryR
             item.changeAvailability(isAvailable)
         }
     }
+
+    /**
+     * Получение всех элементов библиотеки.
+     * @return Список всех элементов библиотеки
+     */
+    override fun getAllItems(): List<LibraryItem> = dataSource.getAllItems()
+
+    /**
+     * Получение элемента по идентификатору.
+     * @param id Идентификатор элемента
+     * @return Найденный элемент или null, если не найден
+     */
+    override fun getItemById(id: Int): LibraryItem? = getAllItems().find { it.id == id }
+
+    /**
+     * Получение элементов определенного типа.
+     * @param type Класс типа элементов
+     * @return Список элементов заданного типа
+     */
+    override fun getItemsByType(type: Class<out LibraryItem>): List<LibraryItem> = getAllItems().filter { type.isInstance(it) }
 }

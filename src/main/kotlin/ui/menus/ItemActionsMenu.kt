@@ -86,17 +86,12 @@ class ItemActionsMenu(
     }
 
     /**
-     * Обработка действия "Вернуть".
+     * Метод для возврата элемента в клиентском коде.
+     * Использует полиморфизм для определения типа элемента.
      */
     private fun returnItem() {
         if (libraryUseCases.returnItem(item)) {
-            val itemType = when (item) {
-                is Book -> "Книга"
-                is Newspaper -> "Газета"
-                is Disk -> "Диск"
-                else -> "Элемент"
-            }
-            println("$itemType ${item.id} успешно возвращен")
+            println("${item.getDisplayTypeName()} ${item.id} успешно возвращен")
         } else {
             println("Этот элемент уже доступен и не может быть возвращен")
         }

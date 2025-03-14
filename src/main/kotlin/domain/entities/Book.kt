@@ -19,4 +19,22 @@ class Book(
     override fun getDetailedInfo(): String {
         return "книга: $title ($pages стр.) автора: $author с id: $id доступна: ${if (isAvailable) "Да" else "Нет"}"
     }
+
+    /**
+     * Книги можно брать домой.
+     * @return true, так как книги можно брать домой
+     */
+    override fun canBeTakenHome(): Boolean = true
+
+    /**
+     * Книги можно читать в библиотеке.
+     * @return true, так как книги можно читать в библиотеке
+     */
+    override fun canBeReadInLibrary(): Boolean = true
+
+    /**
+     * Возвращает отображаемое название типа.
+     * @return "Книга"
+     */
+    override fun getDisplayTypeName(): String = "книга"
 }

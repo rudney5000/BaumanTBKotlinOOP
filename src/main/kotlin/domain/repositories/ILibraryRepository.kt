@@ -12,19 +12,19 @@ interface ILibraryRepository {
      * Получение всех книг из репозитория.
      * @return Список всех книг
      */
-    fun getAllBooks(): List<Book>
+    fun getAllBooks(): List<Book>  = getItemsByType(Book::class.java).filterIsInstance<Book>()
 
     /**
      * Получение всех газет из репозитория.
      * @return Список всех газет
      */
-    fun getAllNewspapers(): List<Newspaper>
+    fun getAllNewspapers(): List<Newspaper> = getItemsByType(Newspaper::class.java).filterIsInstance<Newspaper>()
 
     /**
      * Получение всех дисков из репозитория.
      * @return Список всех дисков
      */
-    fun getAllDisks(): List<Disk>
+    fun getAllDisks(): List<Disk> = getItemsByType(Disk::class.java).filterIsInstance<Disk>()
 
     /**
      * Поиск книги по идентификатору.
@@ -53,4 +53,24 @@ interface ILibraryRepository {
      * @param isAvailable Новое состояние доступности
      */
     fun updateItemAvailability(item: LibraryItem, isAvailable: Boolean)
+
+    /**
+     * Получение всех элементов библиотеки.
+     * @return Список всех элементов библиотеки
+     */
+    fun getAllItems(): List<LibraryItem>
+
+    /**
+     * Получение элемента по идентификатору.
+     * @param id Идентификатор элемента
+     * @return Найденный элемент или null, если не найден
+     */
+    fun getItemById(id: Int): LibraryItem?
+
+    /**
+     * Получение элементов определенного типа.
+     * @param type Класс типа элементов
+     * @return Список элементов заданного типа
+     */
+    fun getItemsByType(type: Class<out LibraryItem>): List<LibraryItem>
 }

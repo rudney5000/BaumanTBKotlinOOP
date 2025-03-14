@@ -28,6 +28,12 @@ class LibraryUseCases(private val repository: ILibraryRepository) {
     fun getAllDisks(): List<Disk> = repository.getAllDisks()
 
     /**
+     * Получение всех элементов библиотеки.
+     * @return Список всех элементов из репозитория
+     */
+    fun getAllItems(): List<LibraryItem> = repository.getAllItems()
+
+    /**
      * Взять элемент домой.
      * Газеты нельзя брать домой, только книги и диски.
      * @param item Элемент для взятия домой
@@ -36,7 +42,7 @@ class LibraryUseCases(private val repository: ILibraryRepository) {
     fun takeItemHome(item: LibraryItem): Boolean {
         return when {
             !item.isAvailable -> false
-            item is Newspaper -> false
+            !item.canBeTakenHome() -> false
             else -> {
                 repository.updateItemAvailability(item, false)
                 true
@@ -53,7 +59,7 @@ class LibraryUseCases(private val repository: ILibraryRepository) {
     fun readItemInLibrary(item: LibraryItem): Boolean {
         return when {
             !item.isAvailable -> false
-            item is Disk -> false
+            !item.canBeReadInLibrary() -> false
             else -> {
                 repository.updateItemAvailability(item, false)
                 true

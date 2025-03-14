@@ -24,4 +24,10 @@ interface LocalDataSource {
      * @return Список дисков
      */
     fun getDisks(): List<Disk>
+
+    /**
+     * Получение всех элементов библиотеки из источника данных.
+     * @return Список всех элементов библиотеки
+     */
+    fun getAllItems(): List<LibraryItem>
 }

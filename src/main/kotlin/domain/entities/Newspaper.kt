@@ -18,4 +18,22 @@ class Newspaper(
     override fun getDetailedInfo(): String {
         return "выпуск: $issueNumber газеты $title с id: $id доступен: ${if (isAvailable) "Да" else "Нет"}"
     }
+
+    /**
+     * Газеты нельзя брать домой.
+     * @return false, так как газеты не предназначены для выноса из библиотеки
+     */
+    override fun canBeTakenHome(): Boolean = false
+
+    /**
+     * Газеты можно читать в библиотеке.
+     * @return true, так как газеты можно читать в библиотеке
+     */
+    override fun canBeReadInLibrary(): Boolean = true
+
+    /**
+     * Возвращает отображаемое название типа.
+     * @return "Газета"
+     */
+    override fun getDisplayTypeName(): String = "Газета"
 }

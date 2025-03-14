@@ -31,4 +31,25 @@ abstract class BaseLibraryItem(
     fun changeAvailability(newAvailability: Boolean) {
         isAvailable = newAvailability
     }
+
+    /**
+     * Проверяет, может ли элемент быть взят на дом.
+     * По умолчанию возвращает true, но может быть переопределен в подклассах.
+     * @return true, если элемент можно брать домой
+     */
+    open override fun canBeTakenHome(): Boolean = true
+
+    /**
+     * Проверяет, может ли элемент быть прочитан/использован в библиотеке.
+     * По умолчанию возвращает true, но может быть переопределен в подклассах.
+     * @return true, если элемент можно использовать в библиотеке
+     */
+    open override fun canBeReadInLibrary(): Boolean = true
+
+    /**
+     * Абстрактный метод, возвращающий отображаемое название типа элемента.
+     * Должен быть реализован в дочерних классах.
+     * @return Строка с названием типа элемента
+     */
+    abstract override fun getDisplayTypeName(): String
 }

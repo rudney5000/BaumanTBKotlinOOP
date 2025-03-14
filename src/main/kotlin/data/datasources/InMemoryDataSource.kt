@@ -49,4 +49,12 @@ class InMemoryDataSource : LocalDataSource {
      * @return Список всех дисков
      */
     override fun getDisks(): List<Disk> = disks
+
+    override fun getAllItems(): List<LibraryItem> {
+        val allItems = mutableListOf<LibraryItem>()
+        allItems.addAll(books)
+        allItems.addAll(newspapers)
+        allItems.addAll(disks)
+        return allItems
+    }
 }
