@@ -2,14 +2,14 @@ package data.repositories
 
 import data.datasources.LocalDataSource
 import domain.entities.*
-import domain.repositories.ILibraryRepository
+import domain.repositories.LibraryRepository
 
 /**
  * Реализация репозитория библиотеки.
  * Работает с источником данных для получения и обновления элементов.
  * @param dataSource Источник данных
  */
-class LibraryRepositoryImpl(private val dataSource: LocalDataSource) : ILibraryRepository {
+class LibraryRepositoryImpl(private val dataSource: LocalDataSource) : LibraryRepository {
 
     /**
      * Получение всех книг.
@@ -28,28 +28,6 @@ class LibraryRepositoryImpl(private val dataSource: LocalDataSource) : ILibraryR
      * @return Список всех дисков
      */
     override fun getAllDisks(): List<Disk> = dataSource.getDisks()
-
-    /**
-     * Поиск книги по идентификатору.
-     * @param id Идентификатор книги
-     * @return Найденная книга или null
-     */
-    override fun getBookById(id: Int): Book? = getAllBooks().find { it.id == id }
-
-    /**
-     * Поиск газеты по идентификатору.
-     * @param id Идентификатор газеты
-     * @return Найденная газета или null
-     */
-    override fun getNewspaperById(id: Int): Newspaper? = getAllNewspapers().find { it.id == id }
-
-    /**
-     * Поиск диска по идентификатору.
-     * @param id Идентификатор диска
-     * @return Найденный диск или null
-     */
-    override fun getDiskById(id: Int): Disk? = getAllDisks().find { it.id == id }
-
     /**
      * Обновление доступности элемента.
      * @param item Элемент для обновления
@@ -60,24 +38,4 @@ class LibraryRepositoryImpl(private val dataSource: LocalDataSource) : ILibraryR
             item.changeAvailability(isAvailable)
         }
     }
-
-    /**
-     * Получение всех элементов библиотеки.
-     * @return Список всех элементов библиотеки
-     */
-    override fun getAllItems(): List<LibraryItem> = dataSource.getAllItems()
-
-    /**
-     * Получение элемента по идентификатору.
-     * @param id Идентификатор элемента
-     * @return Найденный элемент или null, если не найден
-     */
-    override fun getItemById(id: Int): LibraryItem? = getAllItems().find { it.id == id }
-
-    /**
-     * Получение элементов определенного типа.
-     * @param type Класс типа элементов
-     * @return Список элементов заданного типа
-     */
-    override fun getItemsByType(type: Class<out LibraryItem>): List<LibraryItem> = getAllItems().filter { type.isInstance(it) }
 }

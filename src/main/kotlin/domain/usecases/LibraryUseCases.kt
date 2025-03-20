@@ -1,13 +1,13 @@
 package domain.usecases
 
 import domain.entities.*
-import domain.repositories.ILibraryRepository
+import domain.repositories.LibraryRepository
 
 /**
  * Класс, содержащий бизнес-логику операций с элементами библиотеки.
  * @param repository Репозиторий для доступа к данным
  */
-class LibraryUseCases(private val repository: ILibraryRepository) {
+class LibraryUseCases(private val repository: LibraryRepository) {
 
     /**
      * Получение всех книг.
@@ -26,12 +26,6 @@ class LibraryUseCases(private val repository: ILibraryRepository) {
      * @return Список всех дисков из репозитория
      */
     fun getAllDisks(): List<Disk> = repository.getAllDisks()
-
-    /**
-     * Получение всех элементов библиотеки.
-     * @return Список всех элементов из репозитория
-     */
-    fun getAllItems(): List<LibraryItem> = repository.getAllItems()
 
     /**
      * Взять элемент домой.
