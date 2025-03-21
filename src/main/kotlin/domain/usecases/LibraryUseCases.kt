@@ -1,13 +1,19 @@
 package domain.usecases
 
+import domain.digitization.DigitizationService
 import domain.entities.*
+import domain.manager.PurchaseService
 import domain.repositories.LibraryRepository
+import domain.shops.Shop
 
 /**
  * Класс, содержащий бизнес-логику операций с элементами библиотеки.
  * @param repository Репозиторий для доступа к данным
  */
 class LibraryUseCases(private val repository: LibraryRepository) {
+
+    private val digitizationService = DigitizationService()
+    private val purchaseService = PurchaseService()
 
     /**
      * Получение всех книг.
@@ -73,5 +79,13 @@ class LibraryUseCases(private val repository: LibraryRepository) {
             repository.updateItemAvailability(item, true)
             true
         }
+    }
+
+    fun <T : LibraryItem> purchaseItem(shop: Shop<T>): T {
+        return purchaseService.purchase(shop)
+    }
+
+    fun <T> digitizeItem(item: T): Disk where T : LibraryItem, T : BaseLibraryItem {
+        return digitizationService.digitize(item)
     }
 }

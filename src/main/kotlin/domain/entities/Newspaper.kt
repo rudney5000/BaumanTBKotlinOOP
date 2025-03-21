@@ -2,13 +2,14 @@ package domain.entities
 
 /**
  * Класс, представляющий газету в библиотеке.
- * Наследуется от BaseLibraryItem и добавляет номер выпуска.
+ * Наследуется от BaseLibraryItem и добавляет номер выпуска и месяц выпуска.
  */
 class Newspaper(
     id: Int,
     title: String,
     isAvailable: Boolean,
-    val issueNumber: Int
+    val issueNumber: Int,
+    val month: Month
 ) : BaseLibraryItem(id, title, isAvailable) {
 
     /**
@@ -16,7 +17,7 @@ class Newspaper(
      * @return Строка в формате "выпуск: номерВыпуска газеты наименование с id: id доступен: Да/Нет"
      */
     override fun getDetailedInfo(): String {
-        return "выпуск: $issueNumber газеты $title с id: $id доступен: ${if (isAvailable) "Да" else "Нет"}"
+        return "выпуск: $issueNumber за $month газеты $title с id: $id доступен: ${if (isAvailable) "Да" else "Нет"}"
     }
 
     /**

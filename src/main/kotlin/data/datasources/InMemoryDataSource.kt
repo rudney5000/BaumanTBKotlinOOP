@@ -1,6 +1,7 @@
 package data.datasources
 
 import domain.entities.*
+import utils.extensions.filterByType
 
 /**
  * Реализация источника данных в памяти.
@@ -18,10 +19,10 @@ class InMemoryDataSource : LocalDataSource {
 
     /** Список газет в памяти */
     private val newspapers = mutableListOf(
-        Newspaper(2001, "Сельская жизнь", true, 794),
-        Newspaper(2002, "Аргументы и факты", false, 123),
-        Newspaper(2003, "Коммерсантъ", true, 456),
-        Newspaper(2004, "Известия", true, 789)
+        Newspaper(2001, "Сельская жизнь", true, 794, Month.МАРТ),
+        Newspaper(2002, "Аргументы и факты", false, 123, Month.АПРЕЛЬ),
+        Newspaper(2003, "Коммерсантъ", true, 456, Month.ЯНВАРЬ),
+        Newspaper(2004, "Известия", true, 789, Month.ОКТЯБРЬ)
     )
 
     /** Список дисков в памяти */
@@ -36,19 +37,19 @@ class InMemoryDataSource : LocalDataSource {
      * Получение списка книг.
      * @return Список всех книг
      */
-    override fun getBooks(): List<Book> = books
+    override fun getBooks(): List<Book> = getAllItems().filterByType<Book>()
 
     /**
      * Получение списка газет.
      * @return Список всех газет
      */
-    override fun getNewspapers(): List<Newspaper> = newspapers
+    override fun getNewspapers(): List<Newspaper> = getAllItems().filterByType<Newspaper>()
 
     /**
      * Получение списка дисков.
      * @return Список всех дисков
      */
-    override fun getDisks(): List<Disk> = disks
+    override fun getDisks(): List<Disk> = getAllItems().filterByType<Disk>()
 
     override fun getAllItems(): List<LibraryItem> {
         val allItems = mutableListOf<LibraryItem>()

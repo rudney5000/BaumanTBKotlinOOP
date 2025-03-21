@@ -1,6 +1,9 @@
 package ui.menus
 
 import domain.entities.*
+import domain.shops.BookShop
+import domain.shops.DiskShop
+import domain.shops.NewspaperShop
 import domain.usecases.LibraryUseCases
 import utils.extensions.readInt
 
@@ -24,14 +27,16 @@ class ItemActionsMenu(
             println("1. Взять домой")
             println("2. Читать в читальном зале")
             println("3. Показать подробную информацию")
-            println("4. Вернуть")
+            println("4. Купить")
+            println("5. Вернуть")
             println("0. Вернуться к списку")
 
             when (readInt("Выберите действие:")) {
                 1 -> takeItemHome()
                 2 -> readItemInLibrary()
                 3 -> showDetailedInfo()
-                4 -> returnItem()
+                4 -> purchaseItem()
+                5 -> returnItem()
                 0 -> return
                 else -> println("Некорректный выбор. Попробуйте снова.")
             }
@@ -95,5 +100,17 @@ class ItemActionsMenu(
         } else {
             println("Этот элемент уже доступен и не может быть возвращен")
         }
+    }
+
+    private fun purchaseItem() {
+        val shop = when (item) {
+            is Book -> BookShop(item.title, item.author, item.pages)
+            is Newspaper -> NewspaperShop(item.title, item.issueNumber, item.month)
+            is Disk -> DiskShop(item.title, item.type)
+            else -> throw IllegalArgumentException("Неизвестный тип элемента")
+        }
+
+        val purchasedItem = libraryUseCases.purchaseItem(shop)
+        println("Успешно куплено: ${purchasedItem.getDetailedInfo()}")
     }
 }
