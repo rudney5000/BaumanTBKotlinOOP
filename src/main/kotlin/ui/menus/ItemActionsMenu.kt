@@ -4,17 +4,23 @@ import domain.entities.*
 import domain.shops.BookShop
 import domain.shops.DiskShop
 import domain.shops.NewspaperShop
-import domain.usecases.LibraryUseCases
+import domain.usecases.*
 import utils.extensions.readInt
 
 /**
  * Меню действий с выбранным элементом.
- * @param libraryUseCases Объект с бизнес-логикой
+ * @param purchaseItemUseCase Use case для покупки элемента
+ * @param takeItemHomeUseCase Use case для взятия элемента домой
+ * @param readItemInLibraryUseCase Use case для чтения элемента в библиотеке
+ * @param returnItemUseCase Use case для возврата элемента
  * @param item Выбранный элемент
  */
 class ItemActionsMenu(
-    private val libraryUseCases: LibraryUseCases,
-    private val item: LibraryItem
+    private val item: LibraryItem,
+    private val purchaseItemUseCase: PurchaseItemUseCase,
+    private val takeItemHomeUseCase: TakeItemHomeUseCase,
+    private val readItemInLibraryUseCase: ReadItemInLibraryUseCase,
+    private val returnItemUseCase: ReturnItemUseCase
 ) {
 
     /**
@@ -47,7 +53,7 @@ class ItemActionsMenu(
      * Обработка действия "Взять домой".
      */
     private fun takeItemHome() {
-        if (libraryUseCases.takeItemHome(item)) {
+        if (takeItemHomeUseCase(item)) {
             val itemType = when (item) {
                 is Book -> "Книга"
                 is Disk -> "Диск"
@@ -67,7 +73,7 @@ class ItemActionsMenu(
      * Обработка действия "Читать в читальном зале".
      */
     private fun readItemInLibrary() {
-        if (libraryUseCases.readItemInLibrary(item)) {
+        if (readItemInLibraryUseCase(item)) {
             val itemType = when (item) {
                 is Book -> "Книга"
                 is Newspaper -> "Газета"
@@ -95,7 +101,7 @@ class ItemActionsMenu(
      * Использует полиморфизм для определения типа элемента.
      */
     private fun returnItem() {
-        if (libraryUseCases.returnItem(item)) {
+        if (returnItemUseCase(item)) {
             println("${item.getDisplayTypeName()} ${item.id} успешно возвращен")
         } else {
             println("Этот элемент уже доступен и не может быть возвращен")
@@ -110,7 +116,6 @@ class ItemActionsMenu(
             else -> throw IllegalArgumentException("Неизвестный тип элемента")
         }
 
-        val purchasedItem = libraryUseCases.purchaseItem(shop)
-        println("Успешно куплено: ${purchasedItem.getDetailedInfo()}")
+        println("Успешно куплено: ${purchaseItemUseCase(shop).getDetailedInfo()}")
     }
 }

@@ -1,17 +1,23 @@
 package ui.menus
 
 import domain.entities.LibraryItem
-import domain.usecases.LibraryUseCases
+import domain.usecases.*
 import utils.extensions.readInt
 
 /**
  * Меню выбора элемента из списка.
- * @param libraryUseCases Объект с бизнес-логикой
+ * @param takeItemHomeUseCase Use case для взятия элемента домой
+ * @param readItemInLibraryUseCase Use case для чтения элемента в библиотеке
+ * @param returnItemUseCase Use case для возврата элемента
+ * @param purchaseItemUseCase Use case для покупки элемента
  * @param items Список элементов для отображения
  * @param title Заголовок меню
  */
 class ItemSelectionMenu(
-    private val libraryUseCases: LibraryUseCases,
+    private val takeItemHomeUseCase: TakeItemHomeUseCase,
+    private val readItemInLibraryUseCase: ReadItemInLibraryUseCase,
+    private val returnItemUseCase: ReturnItemUseCase,
+    private val purchaseItemUseCase: PurchaseItemUseCase,
     private val items: List<LibraryItem>,
     private val title: String
 ) {
@@ -42,7 +48,13 @@ class ItemSelectionMenu(
                 return
             } else if (choice in 1..items.size) {
                 val selectedItem = items[choice - 1]
-                ItemActionsMenu(libraryUseCases, selectedItem).display()
+                ItemActionsMenu(
+                    selectedItem,
+                    purchaseItemUseCase,
+                    takeItemHomeUseCase,
+                    readItemInLibraryUseCase,
+                    returnItemUseCase
+                ).display()
             } else {
                 println("Некорректный выбор. Попробуйте снова.")
             }

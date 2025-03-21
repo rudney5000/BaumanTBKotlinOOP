@@ -1,9 +1,24 @@
 package ui.menus
 
-import domain.usecases.LibraryUseCases
+import domain.usecases.DigitizeItemUseCase
+import domain.usecases.GetBooksUseCase
+import domain.usecases.GetNewspapersUseCase
 import utils.extensions.readInt
 
-class DigitizationMenu(private val libraryUseCases: LibraryUseCases) {
+/**
+ * Меню для оцифровки элементов библиотеки.
+ * @property getBooksUseCase Use case для получения списка книг
+ * @property getNewspapersUseCase Use case для получения списка газет
+ * @property digitizeItemUseCase Use case для оцифровки элементов
+ */
+class DigitizationMenu(
+    private val getBooksUseCase: GetBooksUseCase,
+    private val getNewspapersUseCase: GetNewspapersUseCase,
+    private val digitizeItemUseCase: DigitizeItemUseCase
+) {
+    /**
+     * Отображает меню оцифровки и обрабатывает выбор пользователя.
+     */
     fun display() {
         while (true) {
             println("\n=== МЕНЮ ОЦИФРОВКИ ===")
@@ -20,8 +35,11 @@ class DigitizationMenu(private val libraryUseCases: LibraryUseCases) {
         }
     }
 
+    /**
+     * Обрабатывает оцифровку выбранной книги.
+     */
     private fun digitizeBook() {
-        val books = libraryUseCases.getAllBooks()
+        val books = getBooksUseCase()
         if (books.isEmpty()) {
             println("Нет доступных книг для оцифровки.")
             return
@@ -37,15 +55,18 @@ class DigitizationMenu(private val libraryUseCases: LibraryUseCases) {
         if (choice == 0) return
         if (choice in 1..books.size) {
             val selectedBook = books[choice - 1]
-            val disk = libraryUseCases.digitizeItem(selectedBook)
+            val disk = digitizeItemUseCase(selectedBook)
             println("Книга успешно оцифрована. Создан диск: ${disk.getDetailedInfo()}")
         } else {
             println("Некорректный выбор.")
         }
     }
 
+    /**
+     * Обрабатывает оцифровку выбранной газеты.
+     */
     private fun digitizeNewspaper() {
-        val newspapers = libraryUseCases.getAllNewspapers()
+        val newspapers = getNewspapersUseCase()
         if (newspapers.isEmpty()) {
             println("Нет доступных газет для оцифровки.")
             return
@@ -61,7 +82,7 @@ class DigitizationMenu(private val libraryUseCases: LibraryUseCases) {
         if (choice == 0) return
         if (choice in 1..newspapers.size) {
             val selectedNewspaper = newspapers[choice - 1]
-            val disk = libraryUseCases.digitizeItem(selectedNewspaper)
+            val disk = digitizeItemUseCase(selectedNewspaper)
             println("Газета успешно оцифрована. Создан диск: ${disk.getDetailedInfo()}")
         } else {
             println("Некорректный выбор.")

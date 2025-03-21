@@ -30,7 +30,6 @@ class DigitizationService {
 
     /**
      * Генерация ID для цифровой версии.
-     * @param item Исходный материал
      * @return Новый ID для цифровой версии
      */
     private fun generateDiskId(): Int {

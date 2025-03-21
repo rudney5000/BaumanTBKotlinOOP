@@ -3,10 +3,28 @@ package ui.menus
 import domain.shops.BookShop
 import domain.shops.DiskShop
 import domain.shops.NewspaperShop
-import domain.usecases.LibraryUseCases
+import domain.usecases.GetBooksUseCase
+import domain.usecases.GetDisksUseCase
+import domain.usecases.GetNewspapersUseCase
+import domain.usecases.PurchaseItemUseCase
 import utils.extensions.readInt
 
-class PurchaseMenu(private val libraryUseCases: LibraryUseCases) {
+/**
+ * Меню для покупки новых элементов библиотеки.
+ * @property purchaseItemUseCase Use case для покупки элементов
+ * @property getBooksUseCase Use case для получения списка книг
+ * @property getNewspapersUseCase Use case для получения списка газет
+ * @property getDisksUseCase Use case для получения списка дисков
+ */
+class PurchaseMenu(
+    private val purchaseItemUseCase: PurchaseItemUseCase,
+    private val getBooksUseCase: GetBooksUseCase,
+    private val getNewspapersUseCase: GetNewspapersUseCase,
+    private val getDisksUseCase: GetDisksUseCase
+) {
+    /**
+     * Отображает меню покупок и обрабатывает выбор пользователя.
+     */
     fun display() {
         while (true) {
             println("\n=== МЕНЮ ПОКУПОК ===")
@@ -25,9 +43,12 @@ class PurchaseMenu(private val libraryUseCases: LibraryUseCases) {
         }
     }
 
+    /**
+     * Обрабатывает покупку книги.
+     */
     private fun purchaseBook() {
         println("\n=== ВЫБОР КНИГИ ДЛЯ ПОКУПКИ ===")
-        val books = libraryUseCases.getAllBooks()
+        val books = getBooksUseCase()
         println("Список существующих книг:")
         books.forEachIndexed { index, book ->
             println("${index + 1}. ${book.getDetailedInfo()}")
@@ -38,14 +59,17 @@ class PurchaseMenu(private val libraryUseCases: LibraryUseCases) {
         if (choice <= books.size) {
             val selectedBook = books[choice - 1]
             val bookShop = BookShop(selectedBook.title, selectedBook.author, selectedBook.pages)
-            val purchasedBook = libraryUseCases.purchaseItem(bookShop)
+            val purchasedBook = purchaseItemUseCase(bookShop)
             println("Куплена книга: ${purchasedBook.getDetailedInfo()}")
         }
     }
 
+    /**
+     * Обрабатывает покупку газеты.
+     */
     private fun purchaseNewspaper() {
         println("\n=== ВЫБОР ГАЗЕТЫ ДЛЯ ПОКУПКИ ===")
-        val newspapers = libraryUseCases.getAllNewspapers()
+        val newspapers = getNewspapersUseCase()
 
         println("Список существующих газет:")
         newspapers.forEachIndexed { index, newspaper ->
@@ -57,15 +81,22 @@ class PurchaseMenu(private val libraryUseCases: LibraryUseCases) {
 
         if (choice <= newspapers.size) {
             val selectedNewspaper = newspapers[choice - 1]
-            val newspaperShop = NewspaperShop(selectedNewspaper.title, selectedNewspaper.issueNumber, selectedNewspaper.month)
-            val purchasedNewspaper = libraryUseCases.purchaseItem(newspaperShop)
+            val newspaperShop = NewspaperShop(
+                selectedNewspaper.title,
+                selectedNewspaper.issueNumber,
+                selectedNewspaper.month
+            )
+            val purchasedNewspaper = purchaseItemUseCase(newspaperShop)
             println("Куплена газета: ${purchasedNewspaper.getDetailedInfo()}")
         }
     }
 
+    /**
+     * Обрабатывает покупку диска.
+     */
     private fun purchaseDisk() {
         println("\n=== ВЫБОР ДИСКА ДЛЯ ПОКУПКИ ===")
-        val disks = libraryUseCases.getAllDisks()
+        val disks = getDisksUseCase()
 
         println("Список существующих дисков:")
         disks.forEachIndexed { index, disk ->
@@ -78,7 +109,7 @@ class PurchaseMenu(private val libraryUseCases: LibraryUseCases) {
         if (choice <= disks.size) {
             val selectedDisk = disks[choice - 1]
             val diskShop = DiskShop(selectedDisk.title, selectedDisk.type)
-            val purchasedDisk = libraryUseCases.purchaseItem(diskShop)
+            val purchasedDisk = purchaseItemUseCase(diskShop)
             println("Куплен диск: ${purchasedDisk.getDetailedInfo()}")
         }
     }
