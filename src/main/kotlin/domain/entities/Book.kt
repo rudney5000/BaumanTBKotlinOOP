@@ -37,4 +37,8 @@ class Book(
      * @return "Книга"
      */
     override fun getDisplayTypeName(): String = "книга"
+
+    override fun digitize(): String {
+        return "Оцифрованная книга: $title от $author, $pages страниц"
+    }
 }

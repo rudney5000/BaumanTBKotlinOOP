@@ -2,7 +2,6 @@ package ui.console
 
 import data.datasources.InMemoryDataSource
 import data.repositories.LibraryRepositoryImpl
-import domain.usecases.LibraryUseCases
 
 /**
  * Объект для запуска и настройки приложения.
@@ -15,10 +14,9 @@ object MainApp {
         // Инициализация компонентов
         val dataSource = InMemoryDataSource()
         val repository = LibraryRepositoryImpl(dataSource)
-        val useCases = LibraryUseCases(repository)
 
         // Запуск UI
-        val libraryUI = LibraryUI(useCases)
+        val libraryUI = LibraryUI(repository)
         libraryUI.start()
     }
 }
