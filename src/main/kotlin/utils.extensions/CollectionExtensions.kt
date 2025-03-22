@@ -6,5 +6,7 @@ package utils.extensions
  * @return Список элементов указанного типа
  */
 inline fun <reified T> List<*>.filterByType(): List<T> {
-    return this.filterIsInstance<T>()
+    return this.mapNotNull { item ->
+        if (item is T) item else null
+    }
 }

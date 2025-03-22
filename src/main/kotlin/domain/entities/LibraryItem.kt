@@ -3,7 +3,7 @@ package domain.entities
 /**
  * Интерфейс, определяющий основные свойства и методы для всех элементов библиотеки.
  */
-interface LibraryItem {
+sealed interface LibraryItem {
     val id: Int
     val title: String
     val isAvailable: Boolean
@@ -37,4 +37,10 @@ interface LibraryItem {
      * @return Строка с названием типа элемента (например, "Книга", "Газета", "Диск")
      */
     fun getDisplayTypeName(): String
+
+    /**
+     * Создает цифровую версию элемента, если это возможно.
+     * @return Строка, представляющая цифровую версию элемента
+     */
+    fun digitize(): String
 }

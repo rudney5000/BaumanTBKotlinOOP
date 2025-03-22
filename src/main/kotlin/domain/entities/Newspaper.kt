@@ -1,5 +1,7 @@
 package domain.entities
 
+import java.util.*
+
 /**
  * Класс, представляющий газету в библиотеке.
  * Наследуется от BaseLibraryItem и добавляет номер выпуска и месяц выпуска.
@@ -17,7 +19,7 @@ class Newspaper(
      * @return Строка в формате "выпуск: номерВыпуска газеты наименование с id: id доступен: Да/Нет"
      */
     override fun getDetailedInfo(): String {
-        return "выпуск: $issueNumber за $month газеты $title с id: $id доступен: ${if (isAvailable) "Да" else "Нет"}"
+        return "выпуск: $issueNumber за ${month.getDisplayName(Locale("ru"))} газеты $title с id: $id доступен: ${if (isAvailable) "Да" else "Нет"}"
     }
 
     /**
@@ -37,4 +39,8 @@ class Newspaper(
      * @return "Газета"
      */
     override fun getDisplayTypeName(): String = "Газета"
+
+    override fun digitize(): String {
+        return "Оцифрованная газета: $title, выпуск $issueNumber за ${month.getDisplayName(Locale("ru"))}"
+    }
 }

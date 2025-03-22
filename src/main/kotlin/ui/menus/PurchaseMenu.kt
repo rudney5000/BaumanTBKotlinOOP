@@ -58,7 +58,7 @@ class PurchaseMenu(
         val choice = readInt("Выберите номер: ")
         if (choice <= books.size) {
             val selectedBook = books[choice - 1]
-            val bookShop = BookShop(selectedBook.title, selectedBook.author, selectedBook.pages)
+            val bookShop = BookShop(selectedBook)
             val purchasedBook = purchaseItemUseCase(bookShop)
             println("Куплена книга: ${purchasedBook.getDetailedInfo()}")
         }
@@ -81,11 +81,7 @@ class PurchaseMenu(
 
         if (choice <= newspapers.size) {
             val selectedNewspaper = newspapers[choice - 1]
-            val newspaperShop = NewspaperShop(
-                selectedNewspaper.title,
-                selectedNewspaper.issueNumber,
-                selectedNewspaper.month
-            )
+            val newspaperShop = NewspaperShop(selectedNewspaper)
             val purchasedNewspaper = purchaseItemUseCase(newspaperShop)
             println("Куплена газета: ${purchasedNewspaper.getDetailedInfo()}")
         }
@@ -108,7 +104,7 @@ class PurchaseMenu(
 
         if (choice <= disks.size) {
             val selectedDisk = disks[choice - 1]
-            val diskShop = DiskShop(selectedDisk.title, selectedDisk.type)
+            val diskShop = DiskShop(selectedDisk)
             val purchasedDisk = purchaseItemUseCase(diskShop)
             println("Куплен диск: ${purchasedDisk.getDetailedInfo()}")
         }

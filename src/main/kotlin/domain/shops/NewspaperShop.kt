@@ -1,6 +1,5 @@
 package domain.shops
 
-import domain.entities.Month
 import domain.entities.Newspaper
 
 /**
@@ -8,9 +7,7 @@ import domain.entities.Newspaper
  * Продает только газеты.
  */
 class NewspaperShop(
-    private val title: String,
-    private val issueNumber: Int,
-    private val month: Month
+    private val newspaper: Newspaper
 ) : Shop<Newspaper> {
     /**
      * Продажа газеты.
@@ -19,10 +16,10 @@ class NewspaperShop(
     override fun sell(): Newspaper {
         return Newspaper(
             id = 0,
-            title = title,
+            title = newspaper.title,
             isAvailable = true,
-            issueNumber = issueNumber,
-            month = month
+            issueNumber = newspaper.issueNumber,
+            month = newspaper.month
         )
     }
 }

@@ -7,9 +7,7 @@ import domain.entities.Book
  * Продает только книги.
  */
 class BookShop(
-    private val title: String,
-    private val author: String,
-    private val pages: Int
+    private val book: Book,
 ) : Shop<Book> {
     /**
      * Продажа книги.
@@ -18,10 +16,10 @@ class BookShop(
     override fun sell(): Book {
         return Book(
             id = 0,
-            title = title,
+            title = book.title,
             isAvailable = true,
-            pages = pages,
-            author = author
+            pages = book.pages,
+            author = book.author
         )
     }
 }

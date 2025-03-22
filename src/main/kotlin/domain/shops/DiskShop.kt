@@ -1,15 +1,13 @@
 package domain.shops
 
 import domain.entities.Disk
-import domain.entities.DiskType
 
 /**
  * Реализация магазина дисков.
  * Продает только диски.
  */
 class DiskShop(
-    private val title: String,
-    private val type: DiskType
+    private val disk: Disk,
 ) : Shop<Disk> {
     /**
      * Продажа диска.
@@ -18,9 +16,9 @@ class DiskShop(
     override fun sell(): Disk {
         return Disk(
             id = 0,
-            title = title,
+            title = disk.title,
             isAvailable = true,
-            type = type
+            type = disk.type
         )
     }
 }

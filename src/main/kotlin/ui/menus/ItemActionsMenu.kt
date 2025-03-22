@@ -110,10 +110,10 @@ class ItemActionsMenu(
 
     private fun purchaseItem() {
         val shop = when (item) {
-            is Book -> BookShop(item.title, item.author, item.pages)
-            is Newspaper -> NewspaperShop(item.title, item.issueNumber, item.month)
-            is Disk -> DiskShop(item.title, item.type)
-            else -> throw IllegalArgumentException("Неизвестный тип элемента")
+            is Book -> BookShop(item)
+            is Newspaper -> NewspaperShop(item)
+            is Disk -> DiskShop(item)
+            is BaseLibraryItem -> throw IllegalArgumentException("Неизвестный тип элемента")
         }
 
         println("Успешно куплено: ${purchaseItemUseCase(shop).getDetailedInfo()}")

@@ -55,8 +55,12 @@ class DigitizationMenu(
         if (choice == 0) return
         if (choice in 1..books.size) {
             val selectedBook = books[choice - 1]
-            val disk = digitizeItemUseCase(selectedBook)
-            println("Книга успешно оцифрована. Создан диск: ${disk.getDetailedInfo()}")
+            try{
+                val result = digitizeItemUseCase(selectedBook)
+                println("Книга успешно оцифрована: $result")
+            } catch (e: UnsupportedOperationException){
+                println("Эту книгу нельзя оцифровать")
+            }
         } else {
             println("Некорректный выбор.")
         }
@@ -82,8 +86,12 @@ class DigitizationMenu(
         if (choice == 0) return
         if (choice in 1..newspapers.size) {
             val selectedNewspaper = newspapers[choice - 1]
-            val disk = digitizeItemUseCase(selectedNewspaper)
-            println("Газета успешно оцифрована. Создан диск: ${disk.getDetailedInfo()}")
+            try {
+                val result = digitizeItemUseCase(selectedNewspaper)
+                println("Газета успешно оцифрована: $result")
+            } catch (e: UnsupportedOperationException){
+                println("Эту газету нельзя оцифровать")
+            }
         } else {
             println("Некорректный выбор.")
         }

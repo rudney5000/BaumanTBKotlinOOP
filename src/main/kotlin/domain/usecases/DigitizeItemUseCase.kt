@@ -1,21 +1,19 @@
 package domain.usecases
 
 import domain.digitization.DigitizationService
-import domain.entities.BaseLibraryItem
-import domain.entities.Disk
 import domain.entities.LibraryItem
 
 /**
  * Use case для оцифровки элементов библиотеки.
  * @property digitizationService Сервис для оцифровки элементов
  */
-class DigitizeItemUseCase(private val digitizationService: DigitizationService) {
+class DigitizeItemUseCase(private val digitizationService: DigitizationService<LibraryItem>) {
     /**
      * Выполняет оцифровку элемента библиотеки.
      * @param item Элемент для оцифровки
-     * @return Созданный диск с оцифрованным содержимым
+     * @return Строка с результатом оцифровки
      */
-    operator fun <T> invoke(item: T): Disk where T : LibraryItem, T : BaseLibraryItem {
+    operator fun invoke(item: LibraryItem): String {
         return digitizationService.digitize(item)
     }
 }
