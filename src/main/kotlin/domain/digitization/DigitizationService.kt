@@ -5,7 +5,7 @@ import domain.entities.*
 /**
  * Класс для оцифровки печатных материалов библиотеки.
  */
-class DigitizationService<T : LibraryItem> {
+class DigitizationService<T : LibraryItem>(private val diskType: DiskType = DiskType.CD) {
 
     /**
      * Оцифровка.
@@ -13,14 +13,10 @@ class DigitizationService<T : LibraryItem> {
      * @return Диск с цифровой версией газеты
      */
     fun digitize(item: T): String {
-        return item.digitize()
+        return when (diskType) {
+            DiskType.CD -> "Оцифровано на CD: ${item.digitize()}"
+            DiskType.DVD -> "Оцифровано на DVD: ${item.digitize()}"
+        }
     }
 
-    /**
-     * Генерация ID для цифровой версии.
-     * @return Новый ID для цифровой версии
-     */
-    private fun generateDiskId(): Int {
-        return 3000 + (Math.random() * 1000).toInt()
-    }
 }
