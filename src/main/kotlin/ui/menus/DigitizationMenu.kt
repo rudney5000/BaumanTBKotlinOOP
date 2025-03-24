@@ -57,7 +57,7 @@ class DigitizationMenu(
             val selectedBook = books[choice - 1]
             try{
                 val result = digitizeItemUseCase(selectedBook)
-                println("Книга успешно оцифрована: $result")
+                println("Книга успешно оцифрована: ${result.getDetailedInfo()}")
             } catch (e: UnsupportedOperationException){
                 println("Эту книгу нельзя оцифровать")
             }
@@ -88,7 +88,7 @@ class DigitizationMenu(
             val selectedNewspaper = newspapers[choice - 1]
             try {
                 val result = digitizeItemUseCase(selectedNewspaper)
-                println("Газета успешно оцифрована: $result")
+                println("Газета успешно оцифрована: ${result.getDetailedInfo()}")
             } catch (e: UnsupportedOperationException){
                 println("Эту газету нельзя оцифровать")
             }

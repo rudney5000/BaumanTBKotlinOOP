@@ -1,6 +1,7 @@
 package domain.usecases
 
 import domain.digitization.DigitizationService
+import domain.entities.Disk
 import domain.entities.LibraryItem
 
 /**
@@ -13,7 +14,7 @@ class DigitizeItemUseCase(private val digitizationService: DigitizationService<L
      * @param item Элемент для оцифровки
      * @return Строка с результатом оцифровки
      */
-    operator fun invoke(item: LibraryItem): String {
+    operator fun invoke(item: LibraryItem): Disk {
         return digitizationService.digitize(item)
     }
 }
