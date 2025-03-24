@@ -1,18 +1,19 @@
 package domain.entities
 
+import domain.digitization.Digitizable
 import java.util.*
 
 /**
  * Класс, представляющий газету в библиотеке.
  * Наследуется от BaseLibraryItem и добавляет номер выпуска и месяц выпуска.
  */
-class Newspaper(
-    id: Int,
-    title: String,
-    isAvailable: Boolean,
+data class Newspaper(
+    override val id: Int,
+    override val title: String,
+    override var isAvailable: Boolean,
     val issueNumber: Int,
     val month: Month
-) : BaseLibraryItem(id, title, isAvailable) {
+) : BaseLibraryItem(id, title, isAvailable), Digitizable {
 
     /**
      * Получение подробной информации о газете.
@@ -42,5 +43,14 @@ class Newspaper(
 
     override fun digitize(): String {
         return "Оцифрованная газета: $title, выпуск $issueNumber за ${month.getDisplayName(Locale("ru"))}"
+    }
+
+    override fun toDigitalFormat(): Disk {
+        return Disk(
+            id = 0,
+            title = "Цифровая версия газеты: $title, выпуск $issueNumber за ${month.getDisplayName(Locale("ru"))}",
+            isAvailable = true,
+            type = DiskType.DVD
+        )
     }
 }

@@ -14,12 +14,9 @@ class NewspaperShop(
      * @return Новый экземпляр газеты с предустановленными значениями
      */
     override fun sell(): Newspaper {
-        return Newspaper(
+        return newspaper.copy(
             id = 0,
-            title = newspaper.title,
             isAvailable = true,
-            issueNumber = newspaper.issueNumber,
-            month = newspaper.month
         )
     }
 }

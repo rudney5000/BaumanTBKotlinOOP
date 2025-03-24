@@ -4,10 +4,10 @@ package domain.entities
  * Класс, представляющий диск в библиотеке.
  * Наследуется от BaseLibraryItem и добавляет тип диска.
  */
-class Disk(
-    id: Int,
-    title: String,
-    isAvailable: Boolean,
+data class Disk(
+    override val id: Int,
+    override val title: String,
+    override var isAvailable: Boolean,
     val type: DiskType
 ) : BaseLibraryItem(id, title, isAvailable) {
 

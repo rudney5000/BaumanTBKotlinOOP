@@ -14,11 +14,9 @@ class DiskShop(
      * @return Новый экземпляр диска с предустановленными значениями
      */
     override fun sell(): Disk {
-        return Disk(
+        return disk.copy(
             id = 0,
-            title = disk.title,
             isAvailable = true,
-            type = disk.type
         )
     }
 }

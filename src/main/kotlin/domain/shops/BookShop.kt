@@ -14,12 +14,9 @@ class BookShop(
      * @return Новый экземпляр книги с предустановленными значениями
      */
     override fun sell(): Book {
-        return Book(
+        return book.copy(
             id = 0,
-            title = book.title,
-            isAvailable = true,
-            pages = book.pages,
-            author = book.author
+            isAvailable = true
         )
     }
 }
