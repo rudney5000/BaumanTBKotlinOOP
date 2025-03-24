@@ -3,6 +3,7 @@ package data.repositories
 import data.datasources.LocalDataSource
 import domain.entities.*
 import domain.repositories.LibraryRepository
+import utils.extensions.filterByType
 
 /**
  * Реализация репозитория библиотеки.
@@ -15,19 +16,20 @@ class LibraryRepositoryImpl(private val dataSource: LocalDataSource) : LibraryRe
      * Получение всех книг.
      * @return Список всех книг
      */
-    override fun getAllBooks(): List<Book> = dataSource.getBooks()
+    override fun getAllBooks(): List<Book> = dataSource.getAllItems().filterByType<Book>()
 
     /**
      * Получение всех газет.
      * @return Список всех газет
      */
-    override fun getAllNewspapers(): List<Newspaper> = dataSource.getNewspapers()
+    override fun getAllNewspapers(): List<Newspaper> = dataSource.getAllItems().filterByType<Newspaper>()
 
     /**
      * Получение всех дисков.
      * @return Список всех дисков
      */
-    override fun getAllDisks(): List<Disk> = dataSource.getDisks()
+    override fun getAllDisks(): List<Disk> = dataSource.getAllItems().filterByType<Disk>()
+
     /**
      * Обновление доступности элемента.
      * @param item Элемент для обновления

@@ -1,16 +1,18 @@
 package domain.entities
 
+import domain.digitization.Digitizable
+
 /**
  * Класс, представляющий книгу в библиотеке.
  * Наследуется от BaseLibraryItem и добавляет специфичные для книги свойства.
  */
-class Book(
-    id: Int,
-    title: String,
-    isAvailable: Boolean,
+data class Book(
+    override val id: Int,
+    override val title: String,
+    override var isAvailable: Boolean,
     val pages: Int,
     val author: String
-) : BaseLibraryItem(id, title, isAvailable) {
+) : BaseLibraryItem(id, title, isAvailable), Digitizable {
 
     /**
      * Получение подробной информации о книге.
@@ -37,4 +39,17 @@ class Book(
      * @return "Книга"
      */
     override fun getDisplayTypeName(): String = "книга"
+
+    override fun digitize(): String {
+        return "Оцифрованная книга: $title от $author, $pages страниц"
+    }
+
+    override fun toDigitalFormat(): Disk {
+        return Disk(
+            id = 0,
+            title = "Цифровая версия книги: $title ($author)",
+            isAvailable = true,
+            type = DiskType.CD
+        )
+    }
 }

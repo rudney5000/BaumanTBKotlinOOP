@@ -1,20 +1,20 @@
 package ui.console
 
-import domain.usecases.LibraryUseCases
+import domain.repositories.LibraryRepository
 import ui.menus.MainMenu
 
 /**
  * Основной класс пользовательского интерфейса библиотеки.
- * @param libraryUseCases Объект с бизнес-логикой
+ * @param repository Репозиторий для доступа к данным
  */
-class LibraryUI(private val libraryUseCases: LibraryUseCases) {
+class LibraryUI(private val repository: LibraryRepository) {
 
     /**
      * Запуск пользовательского интерфейса.
      */
     fun start() {
         println("Добро пожаловать в систему управления библиотекой!")
-        MainMenu(libraryUseCases).display()
+        MainMenu(repository).display()
         println("Спасибо за использование системы. До свидания!")
     }
 }

@@ -4,7 +4,7 @@ package domain.entities
  * Абстрактный базовый класс для всех элементов библиотеки.
  * Реализует основные функции интерфейса LibraryItem.
  */
-abstract class BaseLibraryItem(
+ abstract class BaseLibraryItem(
     override val id: Int,
     override val title: String,
     override var isAvailable: Boolean
@@ -37,4 +37,8 @@ abstract class BaseLibraryItem(
      * @return Строка с названием типа элемента
      */
     abstract override fun getDisplayTypeName(): String
+
+    override fun digitize(): String {
+        throw UnsupportedOperationException("Этот тип элемента нельзя оцифровать")
+    }
 }
